@@ -238,7 +238,7 @@ like::
             }
             $this->Flash->error('The bookmark could not be saved. Please, try again.');
         }
-        $tags = $this->Bookmarks->Tags->find('list');
+        $tags = $this->Bookmarks->Tags->find('list')->all();
         $this->set(compact('bookmark', 'tags'));
         $this->viewBuilder()->setOption('serialize', ['bookmark']);
     }
@@ -262,7 +262,7 @@ edit form and action. Your ``edit()`` action from
             }
             $this->Flash->error('The bookmark could not be saved. Please, try again.');
         }
-        $tags = $this->Bookmarks->Tags->find('list');
+        $tags = $this->Bookmarks->Tags->find('list')->all();
         $this->set(compact('bookmark', 'tags'));
         $this->viewBuilder()->setOption('serialize', ['bookmark']);
     }
