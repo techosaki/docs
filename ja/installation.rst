@@ -71,6 +71,7 @@ CakePHP の公式のインストール方法として、依存性管理ツール
   #. composer.phar を指定したパスのディレクトリーに移すために以下のコマンドを実行してください。 ::
 
        mv composer.phar /usr/local/bin/composer
+     /usr/local/binへのパスを通してください。
 
 - Windows に Composer をインストール
 
@@ -81,23 +82,15 @@ CakePHP の公式のインストール方法として、依存性管理ツール
 CakePHP プロジェクトを作成
 --------------------------
 
-以上で、Composer をダウンロードとインストールしましたので、 my_app_name フォルダーに
-CakePHP の新しいアプリケーションを作成してください。下記の composer コマンドを実行して作成します。
+composer の create-project コマンドを使用して、新しい CakePHP アプリケーションを作成できます。
 
 .. code-block:: console
 
-    php composer.phar create-project --prefer-dist cakephp/app:"4.*" my_app_name
+    composer create-project --prefer-dist cakephp/app:~5.0 my_app_name
 
-または Composer にパスが通っているのであれば下記のコマンドも使えます。
-
-.. code-block:: console
-
-    composer self-update && composer create-project --prefer-dist cakephp/app:"4.*" my_app_name
-
-一度 Composer がアプリケーションの雛形とコアライブラリーをダウンロードしたら、
-インストールした CakePHP アプリケーションを Composer から操作できるように
-しておくべきです。
-必ず composer.json と composer.lock ファイルは残しておきましょう。
+Composer がアプリケーションのスケルトンとコア CakePHP ライブラリのダウンロードを完了すると、
+Composer 経由でインストールされた CakePHP アプリケーションが動作する状態になります。
+composer.json ファイルと composer.lock ファイル、および残りのソースコードを忘れずに保存してください。
 
 これでインストールした CakePHP アプリケーションにアクセスして、デフォルトの
 ホームページを見ることができるようになりました。このページの内容を変更するには
@@ -116,27 +109,41 @@ CakePHP の変更に合わせて最新の状態に保つ
 デフォルトではあなたのアプリケーションの **composer.json** は下記のようになっています。 ::
 
     "require": {
-        "cakephp/cakephp": "4.0.*"
+        "cakephp/cakephp": "5.0.*"
     }
 
-``php composer.phar update`` を実行するたびに、このマイナーバージョンの
-パッチリリースが手に入ります。代わりに ``^4.0`` に変更して、 ``4.x`` ブランチの
+``composer update``(または``php composer.phar update``) を実行するたびに、このマイナーバージョンの
+パッチリリースが手に入ります。代わりに ``^5.0`` に変更して、 ``5.x`` ブランチの
 最新の安定版マイナーリリースを手に入れることができます。
 
-Oven を使用したインストール
+DDEV を使ったインストール
 ---------------------------
 
-CakePHP を手軽にインストールするための別の方法は、 `Oven <https://github.com/CakeDC/oven>`_ です。
-これは、必要なシステム要件をチェック、CakePHP アプリケーションのスケルトンをインストール、そして、
-開発環境をセットアップするシンプルな PHP スクリプトです。
+CakePHP をインストールするもう一つの簡単な方法は、`DDEV<https://ddev.com/>`_ を使うことです。
+DDEV は、ローカル Web 開発環境を起動するためのオープンソースツールです。
+新しいプロジェクトを設定するには、以下のものが必要です。::
 
-インストールが完了すれば、あなたの CakePHP アプリケーションはすぐに使えます！
+    mkdir my-cakephp-app
+    cd my-cakephp-app
+    ddev config --project-type=cakephp --docroot=webroot
+    ddev composer create --prefer-dist cakephp/app:~5.0
+    ddev launch
+
+既存のプロジェクトがある場合::
+
+    git clone <your-cakephp-repo>
+    cd <your-cakephp-project>
+    ddev config --project-type=cakephp --docroot=webroot
+    ddev composer install
+    ddev launch
+
+DDEV のインストール / アップデート方法の詳細については、`DDEV Docs <https://ddev.readthedocs.io/>`_ を参照してください。
 
 .. note::
 
-    重要: これはデプロイスクリプトではありません。はじめて CakePHP をインストールする開発者を助け、
-    開発環境を素早くセットアップすることが狙いです。本番環境では、ファイルのパーミッション、
-    バーチャルホストの設定など、いくつかの要因を考慮する必要があります。
+    重要：これはデプロイスクリプトではありません。
+    開発者が開発環境を迅速に構築できるようにするためのものです。
+    本番環境向けではありません。
 
 パーミッション
 ==============
